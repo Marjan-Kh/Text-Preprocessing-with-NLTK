@@ -20,6 +20,16 @@ my_lst = text.splitlines()
 df = pd.DataFrame({'Sentence':my_lst})
 #print(df.head())
 
+# Number of words                                                                                    
+df['word_count'] = df['Sentence'].apply(lambda x: len(str(x).split(" ")))
+num_words = df[['Sentence','word_count']].head()
+#print(num_words)
+
+# Number of Characters includes space                                                                
+df['char_count'] = df['Sentence'].str.len()
+num_char = df[['Sentence','char_count']].head()
+#print(num_char)
+
 # Lowercase
 df['Sentence'] = df['Sentence'].str.lower()
 #print(df)
@@ -77,3 +87,7 @@ stem_df = df['Sentence'][:6].apply(
 
 print('Stemmimg')
 print(stem_df)
+
+
+#dd = num_characters = df[['Sentence','word_count','char_count']].head()
+#print(dd)
