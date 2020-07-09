@@ -10,33 +10,38 @@ import pandas as pd
 import string
 
 book = open("Wonderland.txt", "r")
-#print(book.read())
-
 text = book.read()
 my_lst = text.splitlines()
-#print(my_lst)
+print(my_lst)
 
+# ==================
 # Create a DataFrame
 df = pd.DataFrame({'Sentence':my_lst})
-#print(df.head())
+print(df.head())
 
+# ===============
 # Number of words                                                                                    
 df['word_count'] = df['Sentence'].apply(lambda x: len(str(x).split(" ")))
 num_words = df[['Sentence','word_count']].head()
-#print(num_words)
 
+print('Number of Words')
+print(num_words)
+
+# ===================================
 # Number of Characters includes space                                                                
 df['char_count'] = df['Sentence'].str.len()
 num_char = df[['Sentence','char_count']].head()
-#print(num_char)
+print(num_char)
 
+# =========
 # Lowercase
 df['Sentence'] = df['Sentence'].str.lower()
-#print(df)
+print(df)
 
-print(type(df['Sentence']))
-print(type(df['Sentence'][1]))
+# print(type(df['Sentence']))
+# print(type(df['Sentence'][1]))
 
+# =====================
 # Removing punctuations
 def remove_punctuations(df):
     for punctuation in string.punctuation:
@@ -47,38 +52,45 @@ def remove_punctuations(df):
 df['Sentence'] = df['Sentence'].apply(remove_punctuations)
 print(df['Sentence'].head())
 
+# ================
 # Removing Numbers
 df['Sentence'] = df['Sentence'].str.replace('\d+','')
 print(df['Sentence'].head())
 
 # ==============================
-# Removing stop words with NLTK 
+# Number of Stop Words with NLTK 
 # ==============================
 from nltk.corpus import stopwords
-stop_words = stopwords.words('english')
+stop = stopwords.words('english')
 print('Stop Words:')
+print(stop)
+
+df['stopwords'] = df['Sentence'].apply(lambda x: len([x for x in x.split() if x in stop]))
+stop_words = df[['Sentence','stopwords']].head()
 print(stop_words)
 
+# ===================                                                                     
+# Removing Stop Words                                                                        
 df['Sentence'] = df['Sentence'].apply(
-    lambda x: " ".join(x for x in x.split() if x not in stop_words))
+    lambda x: " ".join(x for x in x.split() if x not in stop))
 
 print(df['Sentence'].head())
 
 # ===============
 # Tokenizing text
-# ===============
+# ==============================
 # to split a sentence into words
 from nltk.tokenize import word_tokenize
 
 tokens = [word_tokenize(i) for i in my_lst]
 
-for i in tokens:
-    print(i)
+#for i in tokens:
+#    print(i)
 
 # ========
 # Stemming
 # ===============
-# Snoball Stemmer
+# Snowball Stemmer
 from nltk.stem.snowball import SnowballStemmer
 
 SnowballStemmer = SnowballStemmer('english')
@@ -88,6 +100,24 @@ stem_df = df['Sentence'][:6].apply(
 print('Stemmimg')
 print(stem_df)
 
+# =====================
+# Number of final words                                                                              
+df['word_count'] = df['Sentence'].apply(lambda x: len(str(x).split(" ")))
+num_final_words = df[['Sentence','word_count']].head()
+print(num_final_words)
 
-#dd = num_characters = df[['Sentence','word_count','char_count']].head()
-#print(dd)
+# To count the total number of words in the file:
+def total_words(h):
+    return sum(h.values())
+
+
+
+
+
+
+
+
+
+
+
+
