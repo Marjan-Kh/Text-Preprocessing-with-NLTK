@@ -83,9 +83,8 @@ print(df['Sentence'].head())
 from nltk.tokenize import word_tokenize
 
 tokens = [word_tokenize(i) for i in my_lst]
-
-#for i in tokens:
-#    print(i)
+for i in tokens:
+    print(i)
 
 # ========
 # Stemming
@@ -106,9 +105,9 @@ df['word_count'] = df['Sentence'].apply(lambda x: len(str(x).split(" ")))
 num_final_words = df[['Sentence','word_count']].head()
 print(num_final_words)
 
-# To count the total number of words in the file:
-def total_words(h):
-    return sum(h.values())
+
+
+
 
 
 
